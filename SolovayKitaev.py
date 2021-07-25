@@ -115,11 +115,14 @@ def eigen(matrix, return_values = False):
     # unitary matrices, unlike np.linalg.eig()
     upper_tri, eigen_vec = spla.schur(matrix)
     eigen_val = np.diagonal(upper_tri)
+    
     # Sort the eigenvalues and eigenvectors by (Re + Im)
-    # to ensure that we can compute S correctly
+    # to ensure that similar matrices have the same 
+    # ordering of eigenvectors/eigenvalues
     idx = np.argsort(eigen_val.imag + eigen_val.real)
     eigen_val = eigen_val[idx]
     eigen_vec = eigen_vec[:,idx]
+    
     # Return the eigenvalues and eigenvectors
     if return_values:
         return eigen_val, eigen_vec
@@ -140,6 +143,13 @@ def group_com(mat_A, mat_B):
 def get_angles(unitary, use_sin = True):
     """Compute the rotation angles of a unitary matrix, and the equivalent rotation when
     decomposed as a balance group commutator.
+    
+    Arguments
+    ---------
+    unitary:
+        An SU(2) matrix to be used for calculating the angles
+    use_sin: bool, optional (debugging)
+        If True, sine is used for computing the angles. If False, then cosine
     
     Returns
     -------
