@@ -160,10 +160,17 @@ def get_angles(unitary, use_sin = True):
     """
     # By trial and error, the sine function gives the correct angle
     func = np.sin if use_sin else np.cos
+    
     # Calculate the rotation angle theta, and the corresponding angle phi
     # as per Dawson and Nielsen
+    
+    # Bound the argument for arccos to 1, since floating point errors
+    # sometimes result in numbers > 1
     theta = 2 * np.arccos(min(unitary[0][0].real, 1))
+    
+    # Solve Equation 10 (Dawson and Nielsen) for phi
     phi = 2 * np.arcsin(np.sqrt(func(theta/4)))
+    
     return theta, phi
 
 def get_bgc(unitary,  debug = False):
