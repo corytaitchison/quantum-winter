@@ -140,7 +140,7 @@ def group_com(mat_A, mat_B):
 # Balanced Group Commutator #
 # ------------------------- #
 
-def get_angles(unitary, use_sin = True):
+def get_angles(unitary):
     """Compute the rotation angles of a unitary matrix, and the equivalent rotation when
     decomposed as a balance group commutator.
     
@@ -148,8 +148,6 @@ def get_angles(unitary, use_sin = True):
     ---------
     unitary:
         An SU(2) matrix to be used for calculating the angles
-    use_sin: bool, optional (debugging)
-        If True, sine is used for computing the angles. If False, then cosine
     
     Returns
     -------
@@ -158,18 +156,18 @@ def get_angles(unitary, use_sin = True):
     phi: float
         The equivalent rotation angle when decomposed
     """
-    # By trial and error, the sine function gives the correct angle
-    func = np.sin if use_sin else np.cos
     
     # Calculate the rotation angle theta, and the corresponding angle phi
     # as per Dawson and Nielsen
     
+    # Solve for theta by using the fact that the real component of the 
+    # upper left entry is cos(theta/2).
     # Bound the argument for arccos to 1, since floating point errors
-    # sometimes result in numbers > 1
+    # sometimes result in numbers > 1. 
     theta = 2 * np.arccos(min(unitary[0][0].real, 1))
     
     # Solve Equation 10 (Dawson and Nielsen) for phi
-    phi = 2 * np.arcsin(np.sqrt(func(theta/4)))
+    phi = 2 * np.arcsin(np.sqrt(np.sin(theta/4)))
     
     return theta, phi
 
