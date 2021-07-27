@@ -3,7 +3,7 @@
 
 ## Files
 
-- `Approximations.py`: contains algorithms (functions) for approximating a given unitary single-qubit gate 
+- `Approximations.py`: contains basic  algorithms (functions) for approximating a given unitary single-qubit gate 
 
 - `Circuits.py`: circuit class and subclasses for constructing matrix and *Qiskit* circuits
 
